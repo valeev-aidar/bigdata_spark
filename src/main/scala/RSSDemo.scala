@@ -6,7 +6,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 object RSSDemo {
   def main(args: Array[String]) {
-    val durationSeconds = 20
+    val durationSeconds = 300
     val conf = new SparkConf().setAppName("RSS Spark Application").setIfMissing("spark.master", "local[*]")
     val sc = new SparkContext(conf)
     val ssc = new StreamingContext(sc, Seconds(durationSeconds))
