@@ -3,6 +3,7 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
+import TextProcess.process
 
 object RSSDemo {
   def main(args: Array[String]) {
@@ -23,9 +24,12 @@ object RSSDemo {
       val spark = SparkSession.builder().appName(sc.appName).getOrCreate()
       import spark.sqlContext.implicits._
 	    rdd.toDS().foreach(e => {
-        println("description: " + e.description.value.toString.trim)
+        println(e.description.value.toString.trim)
+        println(process(e.description.value.toString.trim))
+        println("\n")
       })
       println("-----end-of-stream---")
+      println("\n\n")
     })
 
     // run forever

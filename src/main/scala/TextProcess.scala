@@ -36,8 +36,9 @@ object TextProcess {
   }
 
   def isProhibited(ch: Char): Boolean = {
-    val str = " \"?!@#$%^&*()-+={}[]|<>;:,./`~']|"
-    str.contains(ch)
+    //val str = " \"?!@#$%^&*()-+={}[]|<>;:,./`~']|"
+    val alphabet = " 0123456789abcdefghikjlmnopqrstuvwxyz"
+    !alphabet.contains(ch.toLower)
   }
 
   def deleteAts(str: String): String = {
@@ -183,6 +184,25 @@ object TextProcess {
       }
     }
     ans.toString()
+  }
+
+  def process(line: String): String = {
+    val patterns_array: Array[String] = new Array[String](4)
+    patterns_array(0) = "http"
+    patterns_array(1) = "twitter"
+    patterns_array(2) = "instagram"
+    patterns_array(3) = "bit"
+
+    var result = removeApostroph(line)
+    result = deleteTags(result)
+    result = deleteAts(result)
+    result = removeLinks(result, patterns_array)
+    result = changeProhibited(result)
+    result = deleteSpaces(result)
+    result = makeLower(result)
+    result = removeShort(result)
+    result = removeNumbers(result)
+    result.trim()
   }
 
   def main(args: Array[String]): Unit = {
