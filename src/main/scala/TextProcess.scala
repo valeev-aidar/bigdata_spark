@@ -2,37 +2,7 @@ import scala.io.Source
 
 object TextProcess {
   def deleteTags(str: String): String = {
-    val sb = StringBuilder.newBuilder
-    sb.append(str)
-
-    var ok = 1
-    var sample = "<a href="
-    while (ok == 1) {
-      var pos = sb.indexOf(sample)
-      if (pos == -1) {
-        ok = 0
-      }
-      else {
-        var end_of_href = pos
-        while (sb(end_of_href) != '>') {
-          end_of_href += 1
-        }
-
-        sb.delete(pos, end_of_href + 1)
-      }
-    }
-    ok = 1
-    sample = "</a>"
-    while (ok == 1) {
-      var pos = sb.indexOf(sample)
-      if (pos == -1) {
-        ok = 0
-      }
-      else {
-        sb.delete(pos, pos + sample.length)
-      }
-    }
-    return sb.toString()
+    str.replaceAll("<.*?>","")
   }
 
   def isProhibited(ch: Char): Boolean = {
