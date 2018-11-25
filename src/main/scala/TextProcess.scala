@@ -2,7 +2,7 @@ import scala.io.Source
 
 object TextProcess {
   def deleteTags(str: String): String = {
-    str.replaceAll("<.*?>","")
+    str.replaceAll("<.*?>", "")
   }
 
   def isProhibited(ch: Char): Boolean = {
@@ -55,7 +55,7 @@ object TextProcess {
     val sb = StringBuilder.newBuilder
     sb.append(str)
     var x = 0
-    for (x <- 0 until patterns.length) {
+    for (x <- patterns.indices) {
       val pattern = patterns(x)
       var ok = 1
       while (ok == 1) {
@@ -127,15 +127,17 @@ object TextProcess {
     }
     sb.toString()
   }
-  def removeApostroph(str:String):String ={
-    val ans =StringBuilder.newBuilder
-    for (i <- 0 until str.length){
-      if (str(i)!='\''){
+
+  def removeApostroph(str: String): String = {
+    val ans = StringBuilder.newBuilder
+    for (i <- 0 until str.length) {
+      if (str(i) != '\'') {
         ans.append(str(i))
       }
     }
     ans.toString()
   }
+
   def removeNumbers(str: String): String = {
     val ans = StringBuilder.newBuilder
     val splitted = str.split(" ")
@@ -156,6 +158,15 @@ object TextProcess {
     ans.toString()
   }
 
+  // just for fun. Don't blame me.
+  def applyFunctions(fs: List[Function[String, String]], p: String): String = {
+    if (fs.nonEmpty) {
+      applyFunctions(fs.slice(1, fs.length), fs.head(p))
+    } else {
+      p
+    }
+  }
+
   def process(line: String): String = {
     val patterns_array: Array[String] = new Array[String](4)
     patterns_array(0) = "http"
@@ -163,21 +174,24 @@ object TextProcess {
     patterns_array(2) = "instagram"
     patterns_array(3) = "bit"
 
-    var result = removeApostroph(line)
-    result = deleteTags(result)
-    result = deleteAts(result)
-    result = removeLinks(result, patterns_array)
-    result = changeProhibited(result)
-    result = deleteSpaces(result)
-    result = makeLower(result)
-    result = removeShort(result)
-    result = removeNumbers(result)
-    result.trim()
+    val pre_result = applyFunctions(List(
+      removeApostroph
+      , deleteTags
+      , deleteAts
+      , changeProhibited
+      , deleteSpaces
+      , makeLower
+      , removeShort
+      , removeNumbers
+    ), line)
+
+    val result = removeLinks(pre_result, patterns_array).trim
+    result
   }
 
   def main(args: Array[String]): Unit = {
     val file = "input.txt"
-    var patterns_array: Array[String] = new Array[String](4);
+    var patterns_array: Array[String] = new Array[String](4)
     patterns_array(0) = "http"
     patterns_array(1) = "twitter"
     patterns_array(2) = "instagram"
