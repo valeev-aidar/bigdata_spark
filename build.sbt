@@ -35,5 +35,5 @@ assemblyMergeStrategy in assembly := {
  case x => MergeStrategy.first                                                  
 }
 
-mainClass in (Compile, run) := Some("RSSDemo")
-mainClass in (Compile, packageBin) := Some("RSSDemo")
+mainClass in (Compile, run) := Some("Main")
+mainClass in (Compile, packageBin) := Some("Main")
