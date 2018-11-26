@@ -1,20 +1,16 @@
-# bigdata_spark
-Introduction to Big Data. Assignment 2. Stream Processing with Spark
-
-### To compile jar
+# Introduction to Big Data assignment #2: stream processing with Spark 
+## How to build the project 
 * make sure you have sbt installed.
 * make sure you are in the project directory
-* ```set "JAVA_OPTS=-Xms256M -Xmx2g"``` (```export``` instead of ```set ```for Unix)
-* ```sbt assembly```
+* run ```set "JAVA_OPTS=-Xms256M -Xmx2g"``` (use ```export``` instead of ```set ``` for *nix)
+* run ```sbt assembly```
 
-### To submit
-* make sure you are in the spark directory
-* make sure you have set the environment: (```export``` instead of ```set ```for Unix)
--- ```set HADOOP_CONF_DIR=C:\Users\User\Downloads\big_data\edinburgh\hadoop"```
--- ```set YARN_CONF_DIR=C:\Users\User\Downloads\big_data\edinburgh\hadoop"```
--- ```set HADOOP_USER_NAME=edinburgh"```
-* **to submit locally**
---```spark-submit --driver-memory 2g --executor-memory 2g path/to.jar -user false```
-* **to submit to the cluster**
---```spark-submit --master yarn path/to.jar -user false```
+## How to run Spark job 
+* make sure you are in the project directory
+* make sure you have set the environment (use ```export``` instead of ```set ``` for *nix)
+  * ```set HADOOP_CONF_DIR=path_to_hadoop_configuration```
+  * ```set YARN_CONF_DIR=path_to_hadoop_configuration```
+  * ```set HADOOP_USER_NAME=your_spark_user_name```
+* submit the job
+  * ```spark-submit --master yarn path/to.jar -user false```
 
