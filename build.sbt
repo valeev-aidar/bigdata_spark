@@ -1,6 +1,6 @@
 organization := "com.github.catalystcode"
-name := "streaming-rss-html"
-description := "A library for reading public RSS feeds and public websites using Spark Streaming."
+name := "twitter-stream-processing"
+description := "Introduction to Big Data. Assignment 2. Stream Processing with Spark. Edinburgh team."
 
 scalaVersion := "2.11.7"
 
@@ -18,7 +18,7 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-streaming" % sparkVersion
 ).map(_ % "compile")
 
-libraryDependencies ++= Seq(
+libraryDependencies ++= Seq("org.apache.spark" %% "spark-mllib" % "2.3.2",
   "com.rometools" % "rome" % "1.8.0",
   "org.jsoup" % "jsoup" % "1.10.3",
   "log4j" % "log4j" % "1.2.17"

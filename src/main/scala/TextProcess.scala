@@ -73,12 +73,13 @@ object TextProcess {
   }
 
   def process(line: String): String = {
-    val patterns_array: Array[String] = new Array[String](4)
-    patterns_array(0) = "http"
-    patterns_array(1) = "twitter"
-    patterns_array(2) = "instagram"
-    patterns_array(3) = "bit.ly"
-    patterns_array(3) = "pic.twitter"
+    val patterns_array: Array[String] = Array(
+      "http",
+      "pic.twitter",
+      "instagram",
+      "bit.ly",
+      "twitter"
+    )
 
     new ProcessingString(line)
       .removeApostrophe()
