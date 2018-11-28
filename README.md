@@ -10,11 +10,11 @@ Introduction to Big Data. Assignment 2. Stream Processing with Spark
 ### To submit
 * make sure you are in the spark directory
 * make sure you have set the environment: (```export``` instead of ```set ```for Unix)
--- ```set HADOOP_CONF_DIR=C:\Users\User\Downloads\big_data\edinburgh\hadoop"```
--- ```set YARN_CONF_DIR=C:\Users\User\Downloads\big_data\edinburgh\hadoop"```
--- ```set HADOOP_USER_NAME=edinburgh"```
+  * ```set HADOOP_CONF_DIR=path\to\hadoop"```
+  * ```set YARN_CONF_DIR=path\to\hadoop"```
+  * ```set HADOOP_USER_NAME=edinburgh"```
 * **to submit locally**
---```spark-submit --driver-memory 2g --executor-memory 2g path/to.jar -user false```
+  * ```spark-submit --driver-memory 2g --executor-memory 2g path/to.jar -user false```
 * **to submit to the cluster**
---```spark-submit --master yarn path/to.jar -user false```
+  * ```spark-submit --master yarn path/to.jar -user false```
 
