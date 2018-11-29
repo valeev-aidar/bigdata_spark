@@ -1,7 +1,6 @@
 object TextProcess {
 
   implicit class ProcessingString(text: String) {
-
     def removeApostrophe(): String = text.replaceAll("\'", "")
 
     def removeTags(): String = text.replaceAll("<.*?>", "")
@@ -70,6 +69,14 @@ object TextProcess {
       split.foreach(s => if (s.matches("^[a-z]*$")) result ++= s ++ " ")
       result.toString()
     }
+
+    def removeLetterRepetitions(): String =
+      text.split(" ").map(
+        s =>
+          if (s.matches("^([a-z]*)(([a-z])\\3{1,}([a-z])\\4{1,}|([a-z])\\5{2,})([a-z]*)$"))
+            s.replaceAll("([a-z])\\1{1,}", "$1")
+          else s
+      ).mkString(" ")
   }
 
   def process(line: String): String = {
@@ -91,6 +98,7 @@ object TextProcess {
       .removeShort()
       .toLowerCase
       .removeNumbers()
+      .removeLetterRepetitions()
       .trim()
   }
 }
