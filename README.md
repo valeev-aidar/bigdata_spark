@@ -11,6 +11,8 @@
   * ```set HADOOP_CONF_DIR=path_to_hadoop_configuration```
   * ```set YARN_CONF_DIR=path_to_hadoop_configuration```
   * ```set HADOOP_USER_NAME=your_spark_user_name```
-* submit the job
+* to bumit locally, run
+  * ```spark-submit --driver-memory 2g --executor-memory 2g path/to.jar -user false```
+* to submit to the cluster, run
   * ```spark-submit --master yarn path/to.jar -user false```
 
