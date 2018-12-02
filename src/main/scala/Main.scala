@@ -1,17 +1,20 @@
+import java.io.PrintWriter
 import java.util.Date
 import java.text.SimpleDateFormat
 
 import com.github.catalystcode.fortis.spark.streaming.rss.RSSInputDStream
-import org.apache.spark.sql.{Row, SparkSession}
+import org.apache.spark.sql.{Row, SaveMode, SparkSession}
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.ml.PipelineModel
 import TextProcess.process
+import org.apache.hadoop.conf.Configuration
+import org.apache.hadoop.fs.{FileSystem, Path}
 
 object Main {
   def main(args: Array[String]) {
-    val durationSeconds = 90
+    val durationSeconds = 60
     val conf = new SparkConf()
       .setAppName("Twitter Stream Processing")
       .setIfMissing("spark.master", "local[*]")
@@ -38,17 +41,29 @@ object Main {
       import spark.sqlContext.implicits._
 
       if(rdd.count() != 0) {
-        println("\n" + formatDate(new Date()))
-        println("---start-of-stream---")
+        val result = StringBuilder.newBuilder
+
+        result ++= "\n" + formatDate(new Date()) + "\n"
+        result ++= "---start-of-stream---\n"
 
         val df = rdd.map(x => process(x.description.value)).toDF("text")
 
         model.transform(df)
           .select("text","prediction").rdd.collect()
           .map(formatPrediction)
-          .foreach(println)
+          .foreach(s => result ++= s + '\n')
 
-        println("---end-of-stream---\n\n")
+        result ++= "---end-of-stream---\n\n"
+
+        print(result)
+
+        val hdfs = FileSystem.get(new Configuration())
+        val output = hdfs.append(new Path("/user/edinburgh/data/out.txt"))
+        val writer = new PrintWriter(output)
+        writer.println(result)
+        writer.close()
+        output.close()
+        hdfs.close()
       }
     })
 
