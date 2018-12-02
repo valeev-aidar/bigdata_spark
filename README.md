@@ -1,4 +1,9 @@
-# Introduction to Big Data assignment #2: stream processing with Spark
+# Introduction to Big Data 
+# Assignment #2: Stream processing with Spark
+Executable app.jar lies in our folder on the hadoop cluster.
+
+## Team edinburgh
+Vasiliy Alabugin, Dmitry Grigorev, Aidar Valeev, Nick Gaivoronskiy
 
 ## How to build the project 
 * make sure you have sbt installed.
